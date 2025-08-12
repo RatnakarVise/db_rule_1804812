@@ -77,9 +77,9 @@ def remediate_mb_txns(units: List[Unit]):
         for m in matches:
             replacements.append((m["span"], m["suggested_statement"]))
             metadata.append({
-                "table": None,
-                "target_type": None,
-                "target_name": None,
+                "table": "None",
+                "target_type": "None",
+                "target_name": "None",
                 "used_fields": [],
                 "ambiguous": False,
                 "obsolete_mb_txn": m["txn"],
