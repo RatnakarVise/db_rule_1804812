@@ -58,11 +58,11 @@ def find_mb_txn_usage(txt: str):
         })
     return matches
 
-def apply_span_replacements(src: str, repls: List[Tuple[Tuple[int,int], str]]) -> str:
-    out = src
-    for (s, e), r in sorted(repls, key=lambda x: x[0][0], reverse=True):
-        out = out[:s] + r + out[e:]
-    return out
+# def apply_span_replacements(src: str, repls: List[Tuple[Tuple[int,int], str]]) -> str:
+#     out = src
+#     for (s, e), r in sorted(repls, key=lambda x: x[0][0], reverse=True):
+#         out = out[:s] + r + out[e:]
+#     return out
 
 @app.post("/remediate-mb-txns")
 def remediate_mb_txns(units: List[Unit]):
@@ -83,9 +83,9 @@ def remediate_mb_txns(units: List[Unit]):
                 "note": "Replace obsolete MB transaction with MIGO per SAP Note 1804812."
             })
 
-        modified = apply_span_replacements(src, replacements)
+        # modified = apply_span_replacements(src, replacements)
         obj = json.loads(u.model_dump_json())
-        obj["code"] = modified
+        # obj["code"] = modified
         obj["mb_txn_usage"] = metadata
         results.append(obj)
 
