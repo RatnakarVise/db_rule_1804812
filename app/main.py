@@ -31,6 +31,7 @@ class Unit(BaseModel):
     inc_name: str
     type: str
     name: Optional[str] = None
+    class_implementation: Optional[str] = None
     start_line: Optional[int] = None
     end_line: Optional[int] = None
     code: Optional[str] = ""
@@ -76,10 +77,17 @@ def remediate_mb_txns(units: List[Unit]):
         for m in matches:
             replacements.append((m["span"], m["suggested_statement"]))
             metadata.append({
+                "table": None,
+                "target_type": None,
+                "target_name": None,
+                "used_fields": [],
+                "ambiguous": False,
+                "obsolete_mb_txn": m["txn"],
                 "obsolete_txn": m["txn"],
                 "start_char_in_unit": m["span"][0],
                 "end_char_in_unit": m["span"][1],
-                "suggested_statement": m["suggested_statement"],
+                "suggested_statement":m["suggested_statement"],
+                "suggested_fields": None,
                 "note": "Replace obsolete MB transaction with MIGO per SAP Note 1804812."
             })
 
