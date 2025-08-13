@@ -80,15 +80,13 @@ def remediate_mb_txns(units: List[Unit]):
                 "table": "None",
                 "target_type": "None",
                 "target_name": "None",
-                "used_fields": [],
-                "ambiguous": False,
-                "obsolete_mb_txn": m["txn"],
-                "obsolete_txn": m["txn"],
                 "start_char_in_unit": m["span"][0],
                 "end_char_in_unit": m["span"][1],
+                "used_fields": [],
+                "ambiguous": False,
                 "suggested_statement":m["suggested_statement"],
-                "suggested_fields": None,
-                "note": "Replace obsolete MB transaction with MIGO per SAP Note 1804812."
+                "suggested_fields": None
+                # "note": "Replace obsolete MB transaction with MIGO per SAP Note 1804812."
             })
 
         # modified = apply_span_replacements(src, replacements)
