@@ -35,6 +35,12 @@ class Unit(BaseModel):
     start_line: Optional[int] = None
     end_line: Optional[int] = None
     code: Optional[str] = ""
+    
+# --- SNIPPET HELPER ---
+def snippet_at(text: str, start: int, end: int) -> str:
+    s = max(0, start - 60)
+    e = min(len(text), end + 60)
+    return text[s:e].replace("\n", "\\n")
 
 def suggest_replacement(stmt: str) -> str:
     stmt_up = stmt.upper()
@@ -76,6 +82,7 @@ def remediate_mb_txns(units: List[Unit]):
 
         for m in matches:
             replacements.append((m["span"], m["suggested_statement"]))
+            start, end = m["span"]
             metadata.append({
                 "table": "None",
                 "target_type": "None",
@@ -85,7 +92,8 @@ def remediate_mb_txns(units: List[Unit]):
                 "used_fields": [],
                 "ambiguous": False,
                 "suggested_statement":m["suggested_statement"],
-                "suggested_fields": None
+                "suggested_fields": None,
+                "snippet": snippet_at(src, start, end)
                 # "note": "Replace obsolete MB transaction with MIGO per SAP Note 1804812."
             })
 
